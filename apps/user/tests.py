@@ -87,7 +87,6 @@ class TestAuth(APITestCase):
         response = self.client.post(
             self.refresh_url, data={"refresh": refresh})
         result = response.json()
-
         # check that we obtain a status of 200
         self.assertEqual(response.status_code, 200)
 

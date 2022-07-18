@@ -38,8 +38,10 @@ class Authentication(BaseAuthentication):
         # decode the token
         try:
             decoded_data = jwt.decode(
-                token, settings.SECRET_KEY, algorithm="HS256")
-        except Exception:
+                token, settings.SECRET_KEY, algorithms="HS256")
+        except Exception as e:
+            
+            
             return None
 
         # check if token as exipired

@@ -69,7 +69,6 @@ class LoginView(APIView):
         access = get_access_token({"user_id": user.id})
         refresh = get_refresh_token()
 
-        print(access)
         Jwt.objects.create(
             user_id=user.id, access=access.encode().decode(), refresh=refresh.encode().decode()
         )
@@ -97,7 +96,6 @@ class RefreshView(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         try:
             active_jwt = Jwt.objects.get(
                 refresh=serializer.validated_data["refresh"])
@@ -109,8 +107,8 @@ class RefreshView(APIView):
         access = get_access_token({"user_id": active_jwt.user.id})
         refresh = get_refresh_token()
 
-        active_jwt.access = access.decode()
-        active_jwt.refresh = refresh.decode()
+        active_jwt.access = access.encode().decode()
+        active_jwt.refresh = refresh.encode().decode()
         active_jwt.save()
 
         return Response({"access": access, "refresh": refresh})
