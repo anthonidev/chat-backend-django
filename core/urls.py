@@ -6,5 +6,5 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('apps.user.urls')),
-    # path('message/', include('message_control.urls'))
+    path('chat/', include('apps.chat.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
